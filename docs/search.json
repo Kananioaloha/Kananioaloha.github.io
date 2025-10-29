@@ -1,9 +1,16 @@
 [
   {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site\n\n1 + 1\n\n[1] 2"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Kananioaloha.github.io",
+    "title": "Kananioaloha",
     "section": "",
-    "text": "This is a Quarto website.\nlsjvknsvkkksfe\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
+    "text": "“He kā, he iwi, he mākau, he lupe, ua lako ka ipu a ka hoʻokele”\nʻO Dale Codero ke kāne, ʻo Kassy Nohea Astrande ka wahine. Noho pū lāua a hānau ʻia ʻo McKenzie Kananioaloha Tim Sing ma Hilo i ka ua Kanilehua. He kama na ka Pūnana a puka aku mai ke Kula ʻo Nāwahīokalaniʻōpuʻu. He haumāna ʻimi i ke kekelē Laepua ENV Studies ma ke kulanui ʻo Kaminaka ma Oʻahu.\nTo learn more about Quarto websites visit https://quarto.org/docs/websites.\n\n1 + 1\n\n[1] 2"
   }
 ]

@@ -13,8 +13,7 @@ website:
 format:
   html:
     theme:
-      - cosmo
-      - brand
+      light: brite
     css: styles.css
     toc: true
 
