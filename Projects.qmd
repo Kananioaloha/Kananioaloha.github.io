@@ -1,7 +1,5 @@
 ---
-
----
-title: "Lonoikamakahiki — Mini Writeup"
+title: "Lonoikamakahiki"
 ---
 
 **Hauʻoli Makahiki Hou!**\
