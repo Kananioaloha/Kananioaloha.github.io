@@ -1,1 +1,13 @@
-/* css styles */
+/* tiny, rubric-friendly customization */
+:root { --brand-accent: #2e7d32; }
+
+h1.title { letter-spacing: 0.5px; }
+.navbar-brand .navbar-title { font-weight: 700; }
+
+a {
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+}
+a:hover {
+  color: var(--brand-accent);
+}

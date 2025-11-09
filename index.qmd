@@ -1,6 +1,6 @@
 ---
-title: "Kananioaloha"
-image: media/IMG_4200.heic
+title: "Aloha, I am McKenzie Kananioaloha Tim Sing"
+image: media/kii.PNG
 about:
   template: trestles
   image-shape: rounded
@@ -14,9 +14,3 @@ about:
 "He kā, he iwi, he mākau, he lupe, ua lako ka ipu a ka hoʻokele"
 
 ʻO Dale Codero ke kāne, ʻo Kassy Nohea Astrande ka wahine. Noho pū lāua a hānau ʻia ʻo McKenzie Kananioaloha Tim Sing ma Hilo i ka ua Kanilehua. He kama na ka Pūnana a puka aku mai ke Kula ʻo Nāwahīokalaniʻōpuʻu. He haumāna ʻimi i ke kekelē Laepua ENV Studies ma ke kulanui ʻo Kaminaka ma Oʻahu.
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
-
-```{r}
-1 + 1
-```

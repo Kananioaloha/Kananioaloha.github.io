@@ -2,8 +2,9 @@
 title: "About"
 ---
 
-About this site
+Aloha, I’m McKenzie Kananioaloha Tim Sing.\
+Hilo → Nāwahī → Chaminade.\
+I’m into mālama ʻāina, native ecosystems, and simple tools that help community learning.
 
-```{r}
-1 + 1
-```
+This site is just a clean starter for class:\
+Home, Projects, About, one photo, and a tiny style tweak.

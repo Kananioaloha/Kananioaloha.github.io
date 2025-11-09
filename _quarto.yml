@@ -3,19 +3,24 @@ project:
   output-dir: docs
 
 website:
-  title: "Kananioaloha.github.io"
+  title: "Kananioaloha"
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
+      - href: projects.qmd
+        text: Projects
+      - href: about.qmd
+        text: About
+    right:
+      - icon: github
+        href: https://github.com/Kananioaloha/Kananioaloha.github.io
 
 format:
   html:
-    theme:
-      light: brite
+    theme: minty
     css: styles.css
-    toc: true
+    toc: false
 
 editor: visual
 
