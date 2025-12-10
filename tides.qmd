@@ -1,0 +1,184 @@
+---
+title: "Hilo Tides Dashboard"
+author: "McKenzie Kananioaloha Tim Sing"
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-location: left
+editor: visual
+---
+
+```{r setup, message=FALSE, warning=FALSE, echo=FALSE}
+library(tidyverse)
+library(plotly)
+library(leaflet)
+
+tides <- read_csv(
+"data_clean/hilo_tides_2023_clean_copy.csv",
+show_col_types = FALSE
+)
+
+tides_daily <- read_csv(
+"data_clean/hilo_tides_2023_daily_summary_copy.csv",
+show_col_types = FALSE
+)
+
+tides_pred_aug <- read_csv(
+"data_raw/hilo_tides_2023_08_raw.csv",
+show_col_types = FALSE
+)
+
+```
+
+## Overview
+
+This dashboard uses 2023 tide data from Hilo, Hawaiʻi (Station 1617760) to explore how water levels change over time and how that connects to fishing and diving at Hilo Bayfront. A moon phase calendar is used as a reference to see how higher tides often line up with full and new moons. The goal is to help viewers see daily and seasonal patterns in tides that shape fishing, coastal access, and local life in Hawaiʻi.
+
+2023 average low tide: https://www.tidesandcurrents.noaa.gov/noaatidepredictions.html?id=1617760
+
+## Hilo Bayfront Tide Station
+
+```{r station_loc, echo=FALSE}
+station_loc <- tibble(
+name = "Hilo Tide Station (1617760) – Hilo Bayfront",
+lat = 19.7297,
+lon = -155.06
+)
+leaflet(station_loc) |>
+addTiles() |>
+addMarkers(
+lng = ~lon, lat = ~lat,
+popup = ~name
+) |>
+setView(lng = -155.06, lat = 19.7297, zoom = 14)
+```
+
+This interactive map shows the exact location of the Hilo Tide Station (NOAA 1617760) along Hilo One (Bayfront). All tide heights used in this dashboard come from this spot. When we talk about high tide, low tide, fishing conditions, or diving safety, this is the reference point for water-level measurements in Hilo.
+
+**What this code does:**  
+This R chunk creates a tibble with the Hilo tide station’s coordinates and uses the `leaflet` package to build an interactive map. It adds a marker at the station location, loads the base map tiles, and centers the view over Hilo Bayfront. This helps the viewer see exactly where tide measurements come from.
+
+## Daily Maximum Tide Height
+
+```{r mllw, echo=FALSE, out.width="100%"}
+knitr::include_graphics("media/mllw.png")
+```
+
+```{r p_max, echo=FALSE}
+p_max <- ggplot(tides_daily, aes(x = date, y = max_ft)) +
+geom_line() +
+labs(
+title = "Daily Maximum Tide Height – Hilo, Hawaiʻi (2023)",
+x = "Date",
+y = "Max Water Level (ft, MLLW)"
+)
+ggplotly(p_max)
+```
+
+This plot map shows the maximum low tide each day in 2023 at Hilo Bayfront. You can hover over the line to see exact dates and tide heights and zoom into weeks or months. Higher peaks mean days with stronger high tides, which usually line up with full or new moons.
+
+**What this code does:**  
+Plots daily maximum tides for 2023 and then makes the graph interactive with ggplotly(), allowing viewers to hover and zoom to explore tide patterns.
+
+## August Moon Phase Calendar
+
+Around: August 1, 2023 → Full Moon + Perigee (Supermoon) August 30, 2023 → Blue Supermoon (Full) August 16, 2023 → New Moon This creates: High tides reaching 3.0–3.3 ft Low tides dropping to -0.4 to -0.6 ft Super obvious “big up, big down” patterns
+
+```{r moon-phase, echo=FALSE, out.width="100%"}
+knitr::include_graphics("media/hinai.png")
+```
+
+Fishing/Diving Takeaways - Around full/new moons, tides are bigger and currents are stronger -\> good for fishing - Around quarter moons, tides are smaller -\> calmer waters safer and easier for diving
+
+```{r moon-calendar, echo=FALSE, out.width="100%"}
+knitr::include_graphics("media/mahoe.png")
+```
+
+```{r p_max_august, echo=FALSE}
+library(tidyverse)
+library(plotly)
+
+# Filter just August 2023
+tides_august <- tides_daily |>
+  filter(lubridate::month(date) == 8)
+
+# Make August max tide plot
+p_max_aug <- ggplot(tides_august, aes(x = date, y = max_ft)) +
+  geom_line(color = "#1f77b4", linewidth = 1.1) +
+  labs(
+    title = "Daily Maximum Tide Height – Hilo, Hawaiʻi (August 2023)",
+    subtitle = "Strongest spring tides of 2023 (Supermoon + Full & New Moons)",
+    x = "Date",
+    y = "Max Water Level (ft, MLLW)"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(face = "bold", size = 18),
+    plot.subtitle = element_text(size = 13),
+    axis.text.x = element_text(angle = 30, hjust = 1)
+  )
+
+ggplotly(p_max_aug)
+```
+
+This 2023 moon phase calendar lines up with the daily tide plot above. By comparing dates of full and new moons on the calendar with peaks in the tide plot, we can see that many of the largest tides happen near full and new moons.
+
+**What this code does:** 
+This code uses tidyverse to filter the dataset to August 2023 and uses ggplot() with
+geom_line() to plot the daily maximum tides. Then ggplotly() from the plotly package making the graph interactive.
+
+## Perdicted vs Verified Tides (Jan 2023)
+
+```{r pred-vs-obs-nice, echo=FALSE}
+library(tidyverse)
+library(plotly)
+
+# Load and clean
+tides_pred_obs <- read_csv(
+  "data_raw/hilo_tides_2023_01_raw.csv",
+  show_col_types = FALSE
+) |>
+  rename(datetime = 1) |>
+  arrange(datetime)      # ensure proper order for smooth lines
+
+# Make the smooth line plot
+p_nice <- ggplot(tides_pred_obs, aes(x = datetime)) +
+  
+  geom_line(aes(y = `Predicted (ft)`, color = "Predicted Tide"), linewidth = 1.2) +
+  geom_line(aes(y = `Verified (ft)`, color = "Observed Tide"), linewidth = 1.2) +
+  
+  scale_color_manual(
+    values = c(
+      "Predicted Tide" = "#1f77b4",   # ocean blue
+      "Observed Tide" = "#ff7f0e"    # warm orange
+    )
+  ) +
+  
+  labs(
+    title = "Predicted vs Observed Tides – Hilo, January 2023",
+    subtitle = "Two-line comparison makes differences easier to see",
+    x = "Date & Time",
+    y = "Tide Height (ft, MLLW)",
+    color = ""
+  ) +
+  
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(face = "bold", size = 18),
+    plot.subtitle = element_text(size = 13, margin = margin(b = 10)),
+    axis.text.x = element_text(angle = 30, hjust = 1),
+    legend.position = "top"
+  )
+
+ggplotly(p_nice)
+```
+This interactive scattor plot compares NOAA’s predicted average lowest tides with the actual observed tides in Hilo during January 2023. The two lines follow almost the same pattern, showing that tide forecasts are highly accurate for Bayfront. Small gaps between the lines reflect real ocean conditions such as wind, swell, or rain runoff that make the observed tide slightly higher or lower than the prediction.
+
+**What this code does:** 
+This R code reads the January 2023 tide data, renames the first column as datetime, and arranges the measurements in time order. It then uses ggplot() with geom_line() to plot the predicted and observed tide heights as two smooth lines. Custom colors and labels are added with scale_color_manual() and labs(). Finally, ggplotly() turns the plot into an interactive graph so viewers can hover, zoom, and explore how closely the predicted and actual tides match.
+
+**Conclusion** 
+  The 2023 tide patterns in Hilo clearly show how closely our ocean rhythms follow the moon. Full and new moons — especially the August supermoons — created the biggest tide swings of the year, with higher high tides and much lower low tides. Quarter moons brought the opposite: smaller, calmer tides that align with safer diving conditions.
+  By layering tide observations, moon-phase calendars, and interactive visualizations, this dashboard highlights the strong connection between lunar cycles and daily coastal conditions that fishers, divers, and local families rely on. The predicted vs. observed comparison also shows that NOAA’s forecasts for Hilo Bayfront are highly accurate, making them a valuable tool for planning fishing trips, beach days, and coastal safety decisions.
+  Overall, understanding these patterns strengthens our kilo — our ability to observe, anticipate, and make decisions based on natural cycles. These insights can support everything from everyday fishing practices to long-term coastal planning and environmental conservation and education in Hawaiʻi.
