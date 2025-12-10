@@ -56,7 +56,7 @@ setView(lng = -155.06, lat = 19.7297, zoom = 14)
 
 This interactive map shows the exact location of the Hilo Tide Station (NOAA 1617760) along Hilo One (Bayfront). All tide heights used in this dashboard come from this spot. When we talk about high tide, low tide, fishing conditions, or diving safety, this is the reference point for water-level measurements in Hilo.
 
-**What this code does:**  
+**What this code does:**\
 This R chunk creates a tibble with the Hilo tide station’s coordinates and uses the `leaflet` package to build an interactive map. It adds a marker at the station location, loads the base map tiles, and centers the view over Hilo Bayfront. This helps the viewer see exactly where tide measurements come from.
 
 ## Daily Maximum Tide Height
@@ -78,7 +78,7 @@ ggplotly(p_max)
 
 This plot map shows the maximum low tide each day in 2023 at Hilo Bayfront. You can hover over the line to see exact dates and tide heights and zoom into weeks or months. Higher peaks mean days with stronger high tides, which usually line up with full or new moons.
 
-**What this code does:**  
+**What this code does:**\
 Plots daily maximum tides for 2023 and then makes the graph interactive with ggplotly(), allowing viewers to hover and zoom to explore tide patterns.
 
 ## August Moon Phase Calendar
@@ -124,9 +124,7 @@ ggplotly(p_max_aug)
 
 This 2023 moon phase calendar lines up with the daily tide plot above. By comparing dates of full and new moons on the calendar with peaks in the tide plot, we can see that many of the largest tides happen near full and new moons.
 
-**What this code does:** 
-This code uses tidyverse to filter the dataset to August 2023 and uses ggplot() with
-geom_line() to plot the daily maximum tides. Then ggplotly() from the plotly package making the graph interactive.
+**What this code does:** This code uses tidyverse to filter the dataset to August 2023 and uses ggplot() with geom_line() to plot the daily maximum tides. Then ggplotly() from the plotly package making the graph interactive.
 
 ## Perdicted vs Verified Tides (Jan 2023)
 
@@ -173,12 +171,9 @@ p_nice <- ggplot(tides_pred_obs, aes(x = datetime)) +
 
 ggplotly(p_nice)
 ```
+
 This interactive scattor plot compares NOAA’s predicted average lowest tides with the actual observed tides in Hilo during January 2023. The two lines follow almost the same pattern, showing that tide forecasts are highly accurate for Bayfront. Small gaps between the lines reflect real ocean conditions such as wind, swell, or rain runoff that make the observed tide slightly higher or lower than the prediction.
 
-**What this code does:** 
-This R code reads the January 2023 tide data, renames the first column as datetime, and arranges the measurements in time order. It then uses ggplot() with geom_line() to plot the predicted and observed tide heights as two smooth lines. Custom colors and labels are added with scale_color_manual() and labs(). Finally, ggplotly() turns the plot into an interactive graph so viewers can hover, zoom, and explore how closely the predicted and actual tides match.
+**What this code does:** This R code reads the January 2023 tide data, renames the first column as datetime, and arranges the measurements in time order. It then uses ggplot() with geom_line() to plot the predicted and observed tide heights as two smooth lines. Custom colors and labels are added with scale_color_manual() and labs(). Finally, ggplotly() turns the plot into an interactive graph so viewers can hover, zoom, and explore how closely the predicted and actual tides match.
 
-**Conclusion** 
-  The 2023 tide patterns in Hilo clearly show how closely our ocean rhythms follow the moon. Full and new moons — especially the August supermoons — created the biggest tide swings of the year, with higher high tides and much lower low tides. Quarter moons brought the opposite: smaller, calmer tides that align with safer diving conditions.
-  By layering tide observations, moon-phase calendars, and interactive visualizations, this dashboard highlights the strong connection between lunar cycles and daily coastal conditions that fishers, divers, and local families rely on. The predicted vs. observed comparison also shows that NOAA’s forecasts for Hilo Bayfront are highly accurate, making them a valuable tool for planning fishing trips, beach days, and coastal safety decisions.
-  Overall, understanding these patterns strengthens our kilo — our ability to observe, anticipate, and make decisions based on natural cycles. These insights can support everything from everyday fishing practices to long-term coastal planning and environmental conservation and education in Hawaiʻi.
+**Conclusion** The 2023 tide patterns in Hilo clearly show how closely our ocean rhythms follow the moon. Full and new moons — especially the August supermoons — created the biggest tide swings of the year, with higher high tides and much lower low tides. Quarter moons brought the opposite: smaller, calmer tides that align with safer diving conditions. By layering tide observations, moon-phase calendars, and interactive visualizations, this dashboard highlights the strong connection between lunar cycles and daily coastal conditions that fishers, divers, and local families rely on. The predicted vs. observed comparison also shows that NOAA’s forecasts for Hilo Bayfront are highly accurate, making them a valuable tool for planning fishing trips, beach days, and coastal safety decisions. Overall, understanding these patterns strengthens our kilo — our ability to observe, anticipate, and make decisions based on natural cycles. These insights can support everything from everyday fishing practices to long-term coastal planning and environmental conservation and education in Hawaiʻi.
